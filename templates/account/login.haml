@@ -1,0 +1,25 @@
+- extends "layout.haml"
+
+- block content
+  .main.bg-light-gray
+    .container
+      .row
+        .col-md-6.col-md-offset-3
+          .panel.panel-default
+            .panel-body
+              - if form.errors
+                = form.errors
+              %form{method: "post", action: "{% url 'account_login' %}"}
+                - csrf_token
+                %legend Login
+                %input{type: "hidden", name: "next", value: "{{ next }}"}
+                .form-group
+                  %input.form-control{type: "text", name: "login", placeholder: "Username"}
+                .form-group
+                  %input.form-control{type: "password", name: "password", placeholder: "Password"}
+                .form-group
+                  %input.btn.btn-success.form-control{type: "submit", value: "Login!"}
+            .panel-footer
+              %p.text-center
+                Don't have an account yet?
+                %a{href: "{% url 'account_signup' %}"} Sign up!

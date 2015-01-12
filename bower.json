@@ -1,0 +1,20 @@
+{
+  "name": "simple_community",
+  "version": "0.1",
+  "authors": [
+    "Eric Ouyang <contact@ericouyang.com>"
+  ],
+  "description": "Open source community platform",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.0"
+  }
+}

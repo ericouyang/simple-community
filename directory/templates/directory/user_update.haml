@@ -1,0 +1,46 @@
+- extends "layout.haml"
+
+- block content
+  .main.bg-light-gray
+    .container
+      .row
+        .col-md-6.col-md-offset-3
+          .panel.panel-default
+            .panel-body
+              %form{method: "post", action: "{% url 'user-update' object.id %}"}
+                - csrf_token
+                %legend Update ={object.get_full_name}
+                = form
+                = profile_form
+                = education_form
+                = link_form
+                %input{type: "submit"}
+              -#
+                .form-group
+                  %input.form-control{type: "text", name: "first_name", value: "={object.first_name}"}
+                .form-group
+                  %input.form-control{type: "text", name: "last_name", value: "={object.last_name}"}
+                .form-group
+                  %textarea.form-control ={object.profile.about}
+                .form-group
+                  .row
+                    .col-xs-6
+                      %input.form-control{text: "text", name: "profile.town_city", value: "={object.profile.town_city}"}
+                    .col-xs-6
+                      %input.form-control{text: "text", name: "profile.state", value: "={object.profile.state}"}
+
+                %h4.text-uppercase Education
+                .form-group
+                  .row
+                    .col-xs-8
+                      %input.form-control{type: "text", name: "school"}
+                    .col-xs-4
+                      %input.form-control{type: "text", name: "year"}
+                %a.btn.btn-default.form-control
+                  Add School
+                %h4.text-uppercase Links
+                .form-group
+                %a.btn.btn-default.form-control
+                  Add Link
+                .form-group
+                  %input.btn.btn-success.form-control{type: "submit", value: "Save"}

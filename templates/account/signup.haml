@@ -1,0 +1,32 @@
+- extends "layout.haml"
+
+- block content
+  .main.bg-light-gray
+    .container
+      .row
+        .col-md-6.col-md-offset-3
+          .panel.panel-default
+            .panel-body
+              - if form.errors
+                = form.errors
+              %form{method: "post", action: "{% url 'account_signup' %}"}
+                - csrf_token
+                %legend Register
+                .form-group
+                  .row
+                    .col-xs-6
+                      %input.form-control{type: "text", name: "first_name", placeholder: "First Name"}
+                    .col-xs-6
+                      %input.form-control{type: "text", name: "last_name", placeholder: "Last Name"}
+                .form-group
+                  %input.form-control{type: "email", name: "email", placeholder: "Email"}
+                .form-group
+                  %input.form-control{type: "password", name: "password1", placeholder: "Password"}
+                .form-group
+                  %input.form-control{type: "password", name: "password2", placeholder: "Confirm password"}
+                .form-group
+                  %input.btn.btn-success.form-control{type: "submit", value: "Confirm my email address"}
+            .panel-footer
+              %p.text-center
+                Got an account already?
+                %a{href: "{% url 'account_login' %}"} Login

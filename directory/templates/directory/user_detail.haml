@@ -1,0 +1,50 @@
+- extends "layout.haml"
+
+- block content
+  .container
+    - if user.id == object.id
+      %a.btn.btn-sm.btn-success.pull-right{href: "{% url 'user-update' object.id %}"}
+        %i.fa.fa-fw.fa-pencil
+        Edit
+    %h1.page-title
+      =object.get_full_name
+      %small
+        %i.fa.fa-map-marker.fa-fw
+        =object.profile.get_location
+    .row
+      - if object.profile.profile_image
+        .col-md-4
+          %img.img-responsive{src: "={object.profile.profile_image.url}"}
+      .col-md-6
+        - if object.profile.about
+          %section
+            %h4.text-uppercase About me
+            %p
+              =object.profile.about
+        - if object.education_set
+          %section
+            %h4.text-uppercase Education
+            %table.table.table-striped
+              %thead
+                %th
+                  School
+                %th
+                  Class year
+              %tbody
+                - for education in object.education_set.all
+                  %tr
+                    %td
+                      = education.school.name
+                    %td
+                      = education.class_year
+        %section
+          %h4.text-uppercase Contact me
+          %p
+            %a{href: "mailto:={object.email}"}
+              %i.fa.fa-fw.fa-envelope
+              = object.email
+          - for link in object.link_set.all
+            %p
+              %a{href: "mailto:={link.url}"}
+                %i{class: "fa fa-fw ={link.get_icon_class}"}
+                = link.get_display_text

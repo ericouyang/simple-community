@@ -1,0 +1,25 @@
+- extends "layout.haml"
+
+- block content
+  .container
+    %h1.page-title Directory
+    .row
+      %form.form-horizontal
+
+    .row
+      - for user in object_list
+        .col-md-3
+          .thumbnail
+            .caption
+              - if user.profile.profile_image
+                %img.img-responsive{src: "={user.profile.profile_image.url}"}
+              %a{href: "{% url 'user-detail' user.id %}"}
+                %h4
+                  =user.get_full_name
+              %p
+                %i.fa.fa-fw.fa-map-marker
+                =user.profile.get_location
+              - if user.education_set
+                %p
+                  %i.fa.fa-fw.fa-university
+                  =user.education_set.all.0
