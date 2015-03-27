@@ -45,6 +45,6 @@
               = object.email
           - for link in object.link_set.all
             %p
-              %a{href: "mailto:={link.url}"}
+              %a{href: "={link.url}"}
                 %i{class: "fa fa-fw ={link.get_icon_class}"}
                 = link.get_display_text

@@ -19,7 +19,7 @@
               %p
                 %i.fa.fa-fw.fa-map-marker
                 =user.profile.get_location
-              - if user.education_set
+              - if user.education_set.all
                 %p
                   %i.fa.fa-fw.fa-university
                   =user.education_set.all.0

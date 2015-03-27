@@ -5,10 +5,11 @@
     .container
       .row
         .col-md-6.col-md-offset-3
+          - if form.errors
+            .alert.alert-warning
+              We had a problem logging you in. Please check your credentials and try again.
           .panel.panel-default
             .panel-body
-              - if form.errors
-                = form.errors
               %form{method: "post", action: "{% url 'account_login' %}"}
                 - csrf_token
                 %legend Login
@@ -20,6 +21,10 @@
                 .form-group
                   %input.btn.btn-success.form-control{type: "submit", value: "Login!"}
             .panel-footer
+              -#
+                %p.text-center
+                  Don't have an account yet?
+                  %a{href: "{% url 'account_signup' %}"} Sign up!
               %p.text-center
-                Don't have an account yet?
-                %a{href: "{% url 'account_signup' %}"} Sign up!
+                Forgot your password?
+                %a{href: "{% url 'account_reset_password'%}"} Reset it

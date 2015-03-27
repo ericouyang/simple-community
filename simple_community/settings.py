@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'crispy_forms',
     'compressor',
     'localflavor',
 
@@ -70,6 +71,10 @@ AUTHENTICATION_BACKENDS = (
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
 )
+
+ACCOUNT_LOGOUT_ON_GET = True
+
+LOGIN_REDIRECT_URL = 'directory/me'
 
 SITE_ID = 1
 
@@ -150,6 +155,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'allauth.socialaccount.context_processors.socialaccount',
 )
 
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # Import local settings, if defined
 

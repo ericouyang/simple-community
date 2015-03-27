@@ -1,4 +1,5 @@
 - extends "layout.haml"
+- load crispy_forms_tags
 
 - block content
   .main.bg-light-gray
@@ -10,11 +11,19 @@
               %form{method: "post", action: "{% url 'user-update' object.id %}"}
                 - csrf_token
                 %legend Update ={object.get_full_name}
-                = form
-                = profile_form
-                = education_form
-                = link_form
-                %input{type: "submit"}
+                - if form.errors
+                  = form.errors
+                = form | crispy
+                - if profile_form.errors
+                  = profile_form.errors
+                = profile_form | crispy
+                - if education_form.errors
+                  = education_form.errors
+                = education_form | crispy
+                - if link_form.errors
+                  = link_form.errors
+                = link_form | crispy
+                %input.btn.btn-success.form-control{type: "submit", value: "Save"}
               -#
                 .form-group
                   %input.form-control{type: "text", name: "first_name", value: "={object.first_name}"}
