@@ -21,6 +21,14 @@ class Profile(models.Model):
     profile_image = models.ImageField(
         blank=True
     )
+    gender = models.CharField(
+        max_length=20,
+        blank=True,
+        choices=(
+            ('male', 'Male'),
+            ('female', 'Female'),
+        )
+    )
 
     # relationships
     user = models.OneToOneField(User)
