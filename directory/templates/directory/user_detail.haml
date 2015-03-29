@@ -8,9 +8,10 @@
         Edit
     %h1.page-title
       =object.get_full_name
-      %small
-        %i.fa.fa-map-marker.fa-fw
-        =object.profile.get_location
+      - if object.profile.get_location
+        %small
+          %i.fa.fa-map-marker.fa-fw
+          =object.profile.get_location
     .row
       - if object.profile.profile_image
         .col-md-4

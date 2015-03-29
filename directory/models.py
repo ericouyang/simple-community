@@ -52,6 +52,11 @@ class Education(models.Model):
     user = models.ForeignKey(User)
     school = models.ForeignKey('School')
 
+    degree = models.CharField(
+        max_length=100,
+        blank=True
+    )
+
     # timestamps
     created = models.DateTimeField(
         auto_now_add=True

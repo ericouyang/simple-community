@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'crispy_forms',
     'compressor',
     'localflavor',
+    'import_export',
 
     'directory'
 )
@@ -74,7 +75,7 @@ AUTHENTICATION_BACKENDS = (
 
 ACCOUNT_LOGOUT_ON_GET = True
 
-LOGIN_REDIRECT_URL = 'directory/me'
+LOGIN_REDIRECT_URL = '/directory/me'
 
 SITE_ID = 1
 

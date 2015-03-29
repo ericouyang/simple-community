@@ -17,8 +17,9 @@
                 %h4
                   =user.get_full_name
               %p
-                %i.fa.fa-fw.fa-map-marker
-                =user.profile.get_location
+                - if object.profile.get_location
+                  %i.fa.fa-fw.fa-map-marker
+                  =user.profile.get_location
               - if user.education_set.all
                 %p
                   %i.fa.fa-fw.fa-university

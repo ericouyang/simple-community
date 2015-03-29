@@ -6,3 +6,5 @@ django-localflavor==1.1
 hamlpy==0.82.2
 django-crispy-forms==1.4.0
 MySQL-python==1.2.5
+django-import-export==0.2.6
+djrill==1.1.1
