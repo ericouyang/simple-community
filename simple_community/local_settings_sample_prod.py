@@ -2,6 +2,7 @@
 Sample Production local_settings.py
 Usage: copy to local_settings.py and configure for your own usage
 """
+from settings import INSTALLED_APPS
 
 SECRET_KEY = 'GENERATE ME AS A LONG RANDOM KEY'
 
