@@ -70,6 +70,8 @@ class Education(models.Model):
     def __unicode__(self):
         return " '".join([self.school.name, str(self.class_year % 100)])
 
+    class Meta:
+        ordering = ('class_year',)
 
 class Link(models.Model):
     FACEBOOK = 'facebook'
@@ -131,6 +133,8 @@ class Link(models.Model):
         elif self.type == self.OTHER:
             return self.url
 
+    class Meta:
+        ordering = ('type',)
 
 class School(models.Model):
     HIGH_SCHOOL = 'high_school'
@@ -162,3 +166,6 @@ class School(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    class Meta:
+        ordering = ('name',)
