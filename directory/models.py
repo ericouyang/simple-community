@@ -10,7 +10,8 @@ class Profile(models.Model):
     )
     town_city = models.CharField(
         max_length=50,
-        blank=True
+        blank=True,
+        verbose_name='Town/City'
     )
     state = USStateField(
         blank=True

@@ -45,6 +45,9 @@
             %a{href: "mailto:={object.email}"}
               %i.fa.fa-fw.fa-envelope
               = object.email
+          - if object.profile.phone_number
+            %i.fa.fa-fw.fa-phone
+            = object.profile.phone_number
           - for link in object.link_set.all
             %p
               %a{href: "={link.url}"}
