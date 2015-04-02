@@ -71,7 +71,7 @@ class Education(models.Model):
         return " '".join([self.school.name, str(self.class_year % 100)])
 
     class Meta:
-        ordering = ('class_year',)
+        ordering = ('-class_year',)
 
 class Link(models.Model):
     FACEBOOK = 'facebook'

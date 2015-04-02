@@ -46,10 +46,11 @@
               %i.fa.fa-fw.fa-envelope
               = object.email
           - if object.profile.phone_number
-            %i.fa.fa-fw.fa-phone
-            = object.profile.phone_number
+            %p
+              %i.fa.fa-fw.fa-phone
+              = object.profile.phone_number
           - for link in object.link_set.all
             %p
-              %a{href: "={link.url}"}
+              %a{href: "={link.url}", target: "_blank"}
                 %i{class: "fa fa-fw ={link.get_icon_class}"}
                 = link.get_display_text
