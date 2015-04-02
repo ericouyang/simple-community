@@ -19,7 +19,8 @@ class Profile(models.Model):
         blank=True
     )
     profile_image = models.ImageField(
-        blank=True
+        blank=True,
+        upload_to='users/profile_images'
     )
     gender = models.CharField(
         max_length=20,

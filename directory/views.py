@@ -9,7 +9,6 @@ from django.http import HttpResponseRedirect
 from forms import EducationInlineFormSet, LinkInlineFormSet, \
     ProfileInlineFormSet
 
-
 class UserListView(ListView):
     model = User
     template_name = 'directory/user_list'
@@ -41,7 +40,7 @@ class UserUpdateView(UpdateView):
 
         if self.request.POST:
             context['profile_form'] = ProfileInlineFormSet(
-                self.request.POST,
+                self.request.POST, self.request.FILES,
                 instance=self.object
             )
             context['education_form'] = EducationInlineFormSet(
