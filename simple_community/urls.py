@@ -6,12 +6,13 @@ from django.conf.urls.static import static
 
 from django.views.generic import TemplateView
 
+handler403 = 'simple_community.views.permission_denied'
 
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'simple_community.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'^$', TemplateView.as_view(template_name="pages/home")),
+    url(r'^$', TemplateView.as_view(template_name='pages/home')),
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^directory/', include('directory.urls')),

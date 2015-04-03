@@ -2,12 +2,14 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, UpdateView, RedirectView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 
 from django.http import HttpResponseRedirect
 
 from forms import EducationInlineFormSet, LinkInlineFormSet, \
     ProfileInlineFormSet
+
 
 class UserListView(ListView):
     model = User
@@ -31,6 +33,12 @@ class UserUpdateView(UpdateView):
         'first_name',
         'last_name',
     ]
+
+    def dispatch(self, *args, **kwargs):
+        if not (self.request.user.id == self.get_object().id \
+           or self.request.user.is_staff):
+            raise PermissionDenied
+        return super(UserUpdateView, self).dispatch(*args, **kwargs)
 
     def get_success_url(self):
         return reverse('user-detail', kwargs={'pk': self.kwargs['pk']})

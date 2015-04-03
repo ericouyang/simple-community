@@ -9,9 +9,12 @@
     .row
       - for user in object_list
         .col-md-3
-          .thumbnail
-            - if user.profile.profile_image
-            %img.img-responsive{src: "={user.profile.profile_image.url}"}
+          .thumbnail.user-card
+            .profile-image-wrapper
+              - if user.profile.profile_image
+                %img.img-responsive{src: "={user.profile.profile_image.url}"}
+              - else
+                %div.profile-image-placeholder
             .caption
               %a{href: "{% url 'user-detail' user.id %}"}
                 %h4

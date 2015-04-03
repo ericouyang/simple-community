@@ -73,6 +73,7 @@ class Education(models.Model):
     class Meta:
         ordering = ('-class_year',)
 
+
 class Link(models.Model):
     FACEBOOK = 'facebook'
     TWITTER = 'twitter'
@@ -135,6 +136,7 @@ class Link(models.Model):
 
     class Meta:
         ordering = ('type',)
+
 
 class School(models.Model):
     HIGH_SCHOOL = 'high_school'
