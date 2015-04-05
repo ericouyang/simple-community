@@ -26,7 +26,8 @@ class UserFilter(django_filters.FilterSet):
     }
     class Meta:
         model = User
-        fields = ['first_name', 'profile__state', 'profile__town_city', 'education__class_year', 'education__school__name']
+        fields = ['first_name', 'last_name', 'profile__state', 'profile__town_city', 'education__class_year', 'education__school__name']
+        order_by = ['last_name']
 
 
 class UserListView(FilterView):
