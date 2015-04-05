@@ -9,12 +9,12 @@ urlpatterns = patterns('',
     ),
     url(r'^me$', RedirectUserDetailView.as_view(), name='current-user-detail'),
     url(
-        r'^(?P<pk>[\w]+)$',
+        r'^(?P<slug>[\w]+)$',
         login_required(UserDetailView.as_view()),
         name='user-detail'
     ),
     url(
-        r'^(?P<pk>[\w]+)/update$',
+        r'^(?P<slug>[\w]+)/update$',
         login_required(UserUpdateView.as_view()),
         name='user-update'
     ),

@@ -1,23 +1,42 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, UpdateView, RedirectView
+from django.views.generic import DetailView, UpdateView, RedirectView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
+from django.db.models import CharField
 
 from django.http import HttpResponseRedirect
+
+import django_filters
 
 from forms import EducationInlineFormSet, LinkInlineFormSet, \
     ProfileInlineFormSet, InlineFormSetHelper
 
 
-class UserListView(ListView):
+class UserFilter(django_filters.FilterSet):
+    filter_overrides = {
+        CharField: {
+            'filter_class': django_filters.CharFilter,
+            'extra': lambda f: {
+                'lookup_type': 'icontains',
+            }
+        }
+    }
+    class Meta:
+        model = User
+        fields = ['first_name', 'profile__state', 'profile__town_city', 'education__class_year', 'education__school__name']
+
+
+class UserListView(django_filters.views.FilterView):
     model = User
+    filterset_class = UserFilter
     template_name = 'directory/user_list'
 
 
 class UserDetailView(DetailView):
     model = User
+    slug_field = 'username'
     template_name = 'directory/user_detail'
 
 
@@ -29,6 +48,7 @@ class RedirectUserDetailView(RedirectView):
 # see http://brantsteen.com/blog/django-adding-inline-formset-rows-without-javascript/
 class UserUpdateView(UpdateView):
     model = User
+    slug_field = 'username'
     template_name = 'directory/user_update'
     fields = [
         'first_name',

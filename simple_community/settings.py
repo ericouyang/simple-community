@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'compressor',
     'localflavor',
     'import_export',
+    'django_filters',
 
     'directory'
 )

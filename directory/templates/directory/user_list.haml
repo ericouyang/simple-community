@@ -16,7 +16,7 @@
               - else
                 %div.profile-image-placeholder
             .caption
-              %a{href: "{% url 'user-detail' user.id %}"}
+              %a{href: "{% url 'user-detail' user.username %}"}
                 %h4
                   =user.get_full_name
               %p

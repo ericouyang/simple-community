@@ -3,7 +3,7 @@
 - block content
   .container
     - if user.id == object.id
-      %a.btn.btn-sm.btn-success.pull-right{href: "{% url 'user-update' object.id %}"}
+      %a.btn.btn-sm.btn-success.pull-right{href: "{% url 'user-update' object.username %}"}
         %i.fa.fa-fw.fa-pencil
         Edit
     %h1.page-title
@@ -32,6 +32,8 @@
                   School
                 %th
                   Class year
+                %th
+                  Degree
               %tbody
                 - for education in object.education_set.all
                   %tr
@@ -39,6 +41,8 @@
                       = education.school.name
                     %td
                       = education.class_year
+                    %td
+                      = education.degree
         %section
           %h4.text-uppercase Contact me
           %p
