@@ -11,19 +11,22 @@
               %form{method: "post", enctype: "multipart/form-data", action: "{% url 'user-update' object.id %}"}
                 - csrf_token
                 %legend Update ={object.get_full_name}
-                - if form.errors
-                  = form.errors
                 = form | crispy
-                - if profile_form.errors
-                  = profile_form.errors
                 = profile_form | crispy
-                - if education_form.errors
-                  = education_form.errors
-                = education_form | crispy
-                - if link_form.errors
-                  = link_form.errors
-                = link_form | crispy
-                %input.btn.btn-success.form-control{type: "submit", value: "Save"}
+                %p.lead Education
+                - crispy education_form form_helper
+                .form-group.text-right
+                  %button.btn.btn-sm.btn-primary{"type": "submit", name: "add_education"}
+                    %i.fa.fa-fw.fa-plus
+                    Education
+                %p.lead Links
+                - crispy link_form form_helper
+                .form-group.text-right
+                  %button.btn.btn-sm.btn-primary{"type": "submit", name: "add_link"}
+                    %i.fa.fa-fw.fa-plus
+                    Link
+                .form-group
+                  %input.btn.btn-success.form-control{type: "submit", value: "Save"}
               -#
                 .form-group
                   %input.form-control{type: "text", name: "first_name", value: "={object.first_name}"}

@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
 from forms import EducationInlineFormSet, LinkInlineFormSet, \
-    ProfileInlineFormSet
+    ProfileInlineFormSet, InlineFormSetHelper
 
 
 class UserListView(ListView):
@@ -26,6 +26,7 @@ class RedirectUserDetailView(RedirectView):
         return reverse('user-detail', args=[self.request.user.id])
 
 
+# see http://brantsteen.com/blog/django-adding-inline-formset-rows-without-javascript/
 class UserUpdateView(UpdateView):
     model = User
     template_name = 'directory/user_update'
@@ -46,6 +47,13 @@ class UserUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(UserUpdateView, self).get_context_data(**kwargs)
 
+        if 'form' in kwargs:
+            if 'add_education' in self.request.POST:
+                self.request.POST['education_set-TOTAL_FORMS'] = \
+                    int(self.request.POST['education_set-TOTAL_FORMS']) + 1
+            elif 'add_link' in self.request.POST:
+                self.request.POST['link_set-TOTAL_FORMS'] = \
+                    int(self.request.POST['link_set-TOTAL_FORMS']) + 1
         if self.request.POST:
             context['profile_form'] = ProfileInlineFormSet(
                 self.request.POST, self.request.FILES,
@@ -63,6 +71,7 @@ class UserUpdateView(UpdateView):
             context['profile_form'] = ProfileInlineFormSet(instance=self.object)
             context['education_form'] = EducationInlineFormSet(instance=self.object)
             context['link_form'] = LinkInlineFormSet(instance=self.object)
+        context['form_helper'] = InlineFormSetHelper()
         return context
 
     def form_valid(self, form):
@@ -70,7 +79,9 @@ class UserUpdateView(UpdateView):
         profile_form = context['profile_form']
         education_form = context['education_form']
         link_form = context['link_form']
-        if form.is_valid() and profile_form.is_valid() \
+        if 'add_education' not in self.request.POST and \
+           'add_link' not in self.request.POST and \
+           form.is_valid() and profile_form.is_valid() \
            and education_form.is_valid() and link_form.is_valid():
             form.save()
             profile_form.save()
