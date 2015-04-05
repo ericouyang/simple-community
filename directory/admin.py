@@ -22,22 +22,9 @@ class ProfileInline(admin.StackedInline):
 
 
 class UserResource(resources.ModelResource):
-    town_city = fields.Field(attribute='profile__town_city', column_name='town_city', readonly=False)
-    state = fields.Field(attribute='profile__state', column_name='state', readonly=False)
-
-    education = fields.Field(attribute='profile__education_set', widget=widgets.ManyToManyWidget)
-
-    def before_import(self, dataset, dry_run):
-        print dataset
-        print dry_run
-
-    def before_save_instance(self, instance, dry_run):
-        print instance
-
     class Meta:
         model = User
         fields = ('id', 'first_name', 'last_name', 'username', 'email')
-
 
 
 class UserAdmin(ImportExportMixin, UserAdmin):
