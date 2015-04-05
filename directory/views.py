@@ -44,7 +44,7 @@ class UserDetailView(DetailView):
 
 class RedirectUserDetailView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
-        return reverse('user-detail', args=[self.request.user.id])
+        return reverse('user-detail', args=[self.request.user.username])
 
 
 # see http://brantsteen.com/blog/django-adding-inline-formset-rows-without-javascript/
