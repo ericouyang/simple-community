@@ -40,7 +40,7 @@
         .container-fluid
           .navbar-header
             %a.navbar-brand{href: "/"}
-              Simple Community
+              CDB Scholars Community
           .collapse.navbar-collapse
             %ul.nav.navbar-nav.navbar-left
               - if user.is_authenticated
@@ -59,8 +59,9 @@
                     %li
                       %a{href: "{% url 'account_logout' %}"} Logout
               - else
-                %li
-                  %a{href: "{% url 'account_signup' %}"} Register
+                -#
+                  %li
+                    %a{href: "{% url 'account_signup' %}"} Register
                 %li
                   %a{href: "{% url 'account_login' %}"} Login
 
