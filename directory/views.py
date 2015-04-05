@@ -9,6 +9,7 @@ from django.db.models import CharField
 from django.http import HttpResponseRedirect
 
 import django_filters
+from django_filters.views import FilterView
 
 from forms import EducationInlineFormSet, LinkInlineFormSet, \
     ProfileInlineFormSet, InlineFormSetHelper
@@ -28,7 +29,7 @@ class UserFilter(django_filters.FilterSet):
         fields = ['first_name', 'profile__state', 'profile__town_city', 'education__class_year', 'education__school__name']
 
 
-class UserListView(django_filters.views.FilterView):
+class UserListView(FilterView):
     model = User
     filterset_class = UserFilter
     template_name = 'directory/user_list'
