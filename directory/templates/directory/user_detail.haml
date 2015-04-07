@@ -22,7 +22,7 @@
           %section
             %h4.text-uppercase About me
             %p
-              =object.profile.about
+              =object.profile.get_about_as_html | safe
         - if object.education_set.all
           %section
             %h4.text-uppercase Education

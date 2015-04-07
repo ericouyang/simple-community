@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 
 from localflavor.us.models import USStateField, PhoneNumberField
 
+import markdown
+import bleach
+
 
 class Profile(models.Model):
     about = models.TextField(
@@ -45,6 +48,12 @@ class Profile(models.Model):
 
     def get_location(self):
         return ', '.join([self.town_city, self.state])
+
+    def get_about_as_html(self):
+        return bleach.clean(
+            markdown.markdown(self.about),
+            tags=bleach.ALLOWED_TAGS + ['p']
+    )
 
 
 class Education(models.Model):
