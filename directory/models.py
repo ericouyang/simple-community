@@ -26,14 +26,6 @@ class Profile(models.Model):
         blank=True,
         upload_to='users/profile_images'
     )
-    gender = models.CharField(
-        max_length=20,
-        blank=True,
-        choices=(
-            ('male', 'Male'),
-            ('female', 'Female'),
-        )
-    )
 
     # relationships
     user = models.OneToOneField(User)
