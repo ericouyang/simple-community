@@ -64,7 +64,7 @@ class UserUpdateView(UpdateView):
         return super(UserUpdateView, self).dispatch(*args, **kwargs)
 
     def get_success_url(self):
-        return reverse('user-detail', kwargs={'pk': self.kwargs['pk']})
+        return reverse('user-detail', kwargs={'slug': self.kwargs['slug']})
 
     def get_context_data(self, **kwargs):
         context = super(UserUpdateView, self).get_context_data(**kwargs)
