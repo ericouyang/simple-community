@@ -155,6 +155,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     # allauth specific context processors
     'allauth.account.context_processors.account',
     'allauth.socialaccount.context_processors.socialaccount',
+
+    # Google Analytics
+    'common.context_processors.google_analytics',
 )
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
