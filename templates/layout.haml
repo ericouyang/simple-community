@@ -54,6 +54,8 @@
                     %span.caret
                   %ul.dropdown-menu
                     %li
+                      %a{href: "{% url 'current-user-detail' %}"} My Profile
+                    %li
                       %a{href: "{% url 'account_change_password' %}"} Change password
                     %li.divider
                     %li
