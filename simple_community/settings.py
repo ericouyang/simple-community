@@ -22,8 +22,6 @@ SECRET_KEY = '(ad5khlt+#iq(s8ksxafv+2@3hnwr$j0v)0uqfi5%)*)8vk@yt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = []
 
 INTERNAL_IPS = ('127.0.0.1',)
@@ -129,38 +127,46 @@ COMPRESS_PRECOMPILERS = (
 )
 
 # Templates
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates').replace('\\', '/'),
+        ],
+        'OPTIONS': {
+            'context_processors': [
+                # Django core
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.request',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
 
-TEMPLATE_LOADERS = (
-    'hamlpy.template.loaders.HamlPyFilesystemLoader',
-    'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader'
-)
+                # allauth specific context processors
+                'allauth.account.context_processors.account',
+                'allauth.socialaccount.context_processors.socialaccount',
 
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates').replace('\\', '/'),
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    # Django core
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.request',
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.contrib.messages.context_processors.messages',
-
-    # allauth specific context processors
-    'allauth.account.context_processors.account',
-    'allauth.socialaccount.context_processors.socialaccount',
-
-    # Google Analytics
-    'common.context_processors.google_analytics',
-)
+                # Google Analytics
+                'common.context_processors.google_analytics',
+            ],
+            'loaders': (
+                'hamlpy.template.loaders.HamlPyFilesystemLoader',
+                'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader'
+            ),
+            'debug': DEBUG
+        },
+    },
+]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+# allauth
+ACCOUNT_TEMPLATE_EXTENSION = 'haml'
 
 # Import local settings, if defined
 

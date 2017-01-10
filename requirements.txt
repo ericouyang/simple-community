@@ -1,13 +1,12 @@
-Django==1.7.2
-Pillow==2.7.0
-django-allauth==0.19.0
-django-compressor==1.4
-django-localflavor==1.1
-hamlpy==0.82.2
-django-crispy-forms==1.4.0
-MySQL-python==1.2.5
-django-import-export==0.2.6
+Django==1.10.5
+Pillow==4.0.0
+django-allauth==0.30.0
+django-compressor==2.1
+django-localflavor==1.4.1
+-e git://github.com/cyso/HamlPy.git@26ceefd44f7e49f244e25bf7613e07a2e92c835c#egg=hamlpy
+django-crispy-forms==1.6.1
+django-import-export==0.5.1
 djrill==1.1.1
-django-filter==0.9.2
-Markdown==2.6.1
-bleach==1.4.1
+django-filter==0.13
+Markdown==2.6.7
+bleach==1.5.0

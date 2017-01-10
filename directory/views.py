@@ -1,18 +1,23 @@
 from django.shortcuts import render
 from django.views.generic import DetailView, UpdateView, RedirectView
+from django.views.generic.edit import FormView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import CharField
 
 from django.http import HttpResponseRedirect
 
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit, Field, Fieldset, Layout, ButtonHolder, Div, HTML, Button
+from crispy_forms.bootstrap import FormActions, PrependedText, StrictButton
 import django_filters
 from django_filters.views import FilterView
 
 from forms import EducationInlineFormSet, LinkInlineFormSet, \
-    ProfileInlineFormSet, InlineFormSetHelper
+    ProfileInlineFormSet, InlineFormSetHelper, UserSearchForm
 
 
 class UserFilter(django_filters.FilterSet):
@@ -30,16 +35,103 @@ class UserFilter(django_filters.FilterSet):
         order_by = ['last_name']
 
 
-class UserListView(FilterView):
+class UserListView(FormView, FilterView):
     model = User
     filterset_class = UserFilter
-    template_name = 'directory/user_list'
+    template_name = 'directory/user_list.haml'
+    form_class = UserSearchForm
+    
+    def get_initial(self):
+        return self.request.GET
+
+    def get_context_data(self, **kwargs):
+        context = super(UserListView, self).get_context_data(
+            **kwargs
+        )
+
+        helper = FormHelper()
+        helper.form_method = 'get'
+        helper.form_action = self.request.path
+
+        helper.layout = Layout(
+            Div(
+                Div(
+                    Field('first_name'),
+                    css_class='col-xs-6'
+                ),
+                Div(
+                    Field('last_name'),
+                    css_class='col-xs-6'
+                ),
+                css_class='row'
+            ),
+            Div(
+                Div(
+                    Field('profile__town_city'),
+                    css_class='col-xs-6'
+                ),
+                Div(
+                    Field('profile__state'),
+                    css_class='col-xs-6'
+                ),
+                css_class='row'
+            ),
+            Div(
+                Div(
+                    Field('education__school__name'),
+                    css_class='col-xs-6'
+                ),
+                Div(
+                    Field('education__class_year'),
+                    css_class='col-xs-6'
+                ),
+                css_class='row'
+            ),
+            FormActions(
+                StrictButton(
+                    'Search',
+                    type='submit',
+                    css_class='btn-primary'
+                )
+            )
+        )
+
+        context['form'].helper = helper
+        qd = self.request.GET.copy()
+        if 'page' in qd:
+            del qd['page']
+        context['qs'] = qd.urlencode()
+
+        return context
+
+    def get(self, request, *args, **kwargs):
+        filterset_class = self.get_filterset_class()
+        self.filterset = self.get_filterset(filterset_class)
+        
+        object_list = self.filterset.qs
+        paginator = Paginator(object_list, 32)
+
+        page = request.GET.get('page')
+        try:
+            paginated_object_list = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            paginated_object_list = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            paginated_object_list = paginator.page(paginator.num_pages)
+
+
+        self.object_list = paginated_object_list
+        context = self.get_context_data(filter=self.filterset,
+                                        object_list=self.object_list)
+        return self.render_to_response(context)
 
 
 class UserDetailView(DetailView):
     model = User
     slug_field = 'username'
-    template_name = 'directory/user_detail'
+    template_name = 'directory/user_detail.haml'
 
 
 class RedirectUserDetailView(RedirectView):
@@ -51,7 +143,7 @@ class RedirectUserDetailView(RedirectView):
 class UserUpdateView(UpdateView):
     model = User
     slug_field = 'username'
-    template_name = 'directory/user_update'
+    template_name = 'directory/user_update.haml'
     fields = [
         'first_name',
         'last_name',
