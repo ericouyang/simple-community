@@ -1,10 +1,20 @@
 - extends "layout.haml"
 
+- load crispy_forms_tags
+
 - block content
   .container
-    %h1.page-title Directory
+    
+    %h1.page-title Directory 
+      %a.pull-right.btn.btn-sm.btn-primary{href: "#search", role: "button", data-toggle: "collapse"} Search for someone
     .row
-      %form.form-horizontal
+      .col-xs-12
+        - if request.GET.first_name
+          #search
+            - crispy form
+        - else   
+          #search.collapse
+            - crispy form   
 
     .row
       - for user in object_list
@@ -27,3 +37,25 @@
                 %p
                   %i.fa.fa-fw.fa-university
                   =user.education_set.all.0
+    .row
+      .col-xs-12
+        %nav.text-center
+          %ul.pagination
+            - if object_list.has_previous
+              %li
+                %a{href: "={request.path}?page=={object_list.previous_page_number}&={qs}"}
+                  %span &laquo;
+            - for i in object_list.paginator.page_range
+              - if i == object_list.number
+                %li.active
+                  %a{href: "={request.path}?page=={i}&={qs}"}
+                    =i
+              - else
+                %li
+                  %a{href: "={request.path}?page=={i}&={qs}"}
+                    =i
+            - if object_list.has_next
+              %li
+                %a{href: "={request.path}?page=={object_list.next_page_number}&={qs}"}
+                  %span &raquo;
+            
