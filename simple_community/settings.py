@@ -144,6 +144,13 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
+
+                # allauth specific context processors
+                'allauth.account.context_processors.account',
+                'allauth.socialaccount.context_processors.socialaccount',
+
+                # Google Analytics
+                'common.context_processors.google_analytics',
             ],
             'loaders': (
                 'hamlpy.template.loaders.HamlPyFilesystemLoader',
