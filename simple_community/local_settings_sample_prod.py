@@ -32,12 +32,23 @@ COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile} --clean-css'),
 )
 
-# Emails (Use Mandrill to send actual emails)
+# Emails (Use SparkPost to send actual emails)
 
-INSTALLED_APPS += ('djrill',)
+INSTALLED_APPS += ('anymail',)
 
-EMAIL_BACKEND = 'djrill.mail.backends.djrill.DjrillBackend'
-MANDRILL_API_KEY = ''
+EMAIL_BACKEND = 'anymail.backends.sparkpost.SparkPostBackend'
+ANYMAIL = {
+    'SPARKPOST_API_KEY': '',
+    'SEND_DEFAULTS': {
+        'esp_extra': {
+            'transactional': True,
+        },
+        'track_clicks': True,
+        'track_opens': True,
+    },
+}
+
+DEFAULT_FROM_EMAIL = ''
 
 # Google Analytics
 

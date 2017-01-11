@@ -1,1 +1,2 @@
 MySQL-python==1.2.5
+django-anymail==0.7
