@@ -19,7 +19,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^directory/', include('directory.urls')),
     url(r'^accounts/signup/$', RedirectView.as_view(url='/')),
-    url(r'^accounts/', include('allauth.urls'))
+    url(r'^accounts/', include('allauth.urls')),
 
     url(r'^(?P<url>.*/)$', views.flatpage),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
