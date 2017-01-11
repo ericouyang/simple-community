@@ -43,14 +43,14 @@
               Simple Community
           .collapse.navbar-collapse
             %ul.nav.navbar-nav.navbar-left
-              - if user.is_authenticated
+              - if request.user.is_authenticated
                 %li
                   %a{href: "/directory"} Directory
             %ul.nav.navbar-nav.navbar-right
-              - if user.is_authenticated
+              - if request.user.is_authenticated
                 %li.dropdown
-                  %a.dropdown-toggle{href: "{% url 'user-detail' user.id %}", data-toggle: "dropdown"}
-                    =user.get_full_name
+                  %a.dropdown-toggle{href: "{% url 'user-detail' request.user.id %}", data-toggle: "dropdown"}
+                    = request.user.get_full_name
                     %span.caret
                   %ul.dropdown-menu
                     %li
